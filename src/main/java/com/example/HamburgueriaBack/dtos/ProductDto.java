@@ -1,5 +1,5 @@
 package com.example.HamburgueriaBack.dtos;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class ProductDto {
 
