@@ -8,9 +8,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
+import java.util.Optional;
+import java.util.UUID;
 //import java.security.SecureRandom;
 //import java.time.LocalDateTime;
 //import java.time.ZoneId;
@@ -43,6 +43,22 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductModel>> getAllProducts(){
         return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id){
+        Optional<ProductModel> productModelOptional = productService.findById(id);
+        return productModelOptional.<ResponseEntity<Object>>map(productModel -> ResponseEntity.status(HttpStatus.OK).body(productModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id){
+        Optional<ProductModel> productModelOptional = productService.findById(id);
+        if (!productModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
+        }
+        productService.delete(productModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso!");
     }
 
 }
