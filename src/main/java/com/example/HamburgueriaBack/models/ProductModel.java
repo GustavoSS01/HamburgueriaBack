@@ -22,7 +22,7 @@ public class ProductModel implements Serializable {
     private String name;
     @Column(nullable = false, length = 30)
     private String description;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = false)
     private byte image;
     @Column(nullable = false, unique = false, length = 20)
     private String category;

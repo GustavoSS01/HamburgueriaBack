@@ -9,12 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 //import java.security.SecureRandom;
 //import java.time.LocalDateTime;
 //import java.time.ZoneId;
-
-
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -29,10 +28,21 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Object> saveProduct (@RequestBody @Valid ProductDto productDto){
+        if(productService.existsByName(productDto.getName())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um produto cadastrado com esse nome!");
+        }
+        if(productService.existsByDescription(productDto.getDescription())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("A descrição desse produto coincide com a de outro!");
+        }
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productDto, productModel);
         //productModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productModel));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductModel>> getAllProducts(){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
     }
 
 }
