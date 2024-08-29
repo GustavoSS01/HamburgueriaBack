@@ -17,4 +17,5 @@ public class HamburgueriaBackApplication {
 	public String index(){
 		return "Olá mundo";
 	}
+
 }

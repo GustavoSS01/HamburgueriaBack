@@ -61,4 +61,16 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso!");
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto){
+        Optional<ProductModel> productModelOptional = productService.findById(id);
+        if(!productModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
+        }
+        var productModel = new ProductModel();
+        BeanUtils.copyProperties(productDto, productModel);
+        productModel.setId(productModelOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(productService.save(productModel));
+    }
+
 }
