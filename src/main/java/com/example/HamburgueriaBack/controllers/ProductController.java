@@ -16,7 +16,7 @@ import java.util.UUID;
 //import java.time.ZoneId;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 @RequestMapping("/product")
 public class ProductController {
 
