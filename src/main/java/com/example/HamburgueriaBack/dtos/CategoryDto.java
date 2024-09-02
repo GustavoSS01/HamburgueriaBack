@@ -1,6 +1,9 @@
 package com.example.HamburgueriaBack.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
 public class CategoryDto {
 
     @NotBlank
