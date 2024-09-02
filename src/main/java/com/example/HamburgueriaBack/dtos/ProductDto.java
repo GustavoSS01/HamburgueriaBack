@@ -10,7 +10,7 @@ public class ProductDto {
     @NotBlank
     private String description;
 
-    private byte[] image;
+    private String image;
 
     @NotBlank
     private String category;

@@ -16,7 +16,7 @@ import java.util.UUID;
 //import java.time.ZoneId;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 @RequestMapping("/product")
 public class ProductController {
 
@@ -59,6 +59,18 @@ public class ProductController {
         }
         productService.delete(productModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso!");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto){
+        Optional<ProductModel> productModelOptional = productService.findById(id);
+        if(!productModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
+        }
+        var productModel = new ProductModel();
+        BeanUtils.copyProperties(productDto, productModel);
+        productModel.setId(productModelOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(productService.save(productModel));
     }
 
 }
