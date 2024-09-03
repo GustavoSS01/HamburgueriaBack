@@ -1,14 +1,12 @@
 package com.example.HamburgueriaBack.services;
 
 import com.example.HamburgueriaBack.models.CategoryModel;
+
 import com.example.HamburgueriaBack.repositories.CategoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -19,5 +17,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    public CategoryModel save(CategoryModel categoryModel) {
+        return categoryRepository.save(categoryModel);
+    }
 
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
+    }
+
+    public List<CategoryModel> findAll() {
+        return categoryRepository.findAll();
+    }
 }

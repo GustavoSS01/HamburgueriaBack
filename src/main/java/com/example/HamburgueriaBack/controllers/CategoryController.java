@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.HamburgueriaBack.services.CategoryService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/category")
@@ -23,9 +25,16 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Object> saveCategory(@RequestBody @Valid CategoryDto categoryDto){
+        if(categoryService.existsByName(categoryDto.getName())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: name already in use!");
+        }
         var categoryModel = new CategoryModel();
         BeanUtils.copyProperties(categoryDto, categoryModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(categoryModel));
     }
 
+    @GetMapping
+    public ResponseEntity<List<CategoryModel>> getAllCategories(){
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll());
+    }
 }
