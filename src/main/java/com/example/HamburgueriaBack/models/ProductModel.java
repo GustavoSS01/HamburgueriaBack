@@ -23,7 +23,7 @@ public class ProductModel implements Serializable {
     @Column(nullable = false)
     private String image;
     @Column(nullable = false, length = 20)
-    private String category;
+    private String categoryId;
 
     public UUID getId() {
         return id;

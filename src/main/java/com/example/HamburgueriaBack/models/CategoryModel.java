@@ -20,4 +20,12 @@ public class CategoryModel implements Serializable {
     private String name;
     @Column(nullable = false)
     private long num_prod;
+
+    public UUID getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(UUID idCategory) {
+        this.idCategory = idCategory;
+    }
 }

@@ -35,4 +35,9 @@ public class CategoryService {
     public Optional<CategoryModel> findById(UUID id) {
         return categoryRepository.findById(id);
     }
+
+    @Transactional
+    public void delete(CategoryModel categoryModel) {
+        categoryRepository.delete(categoryModel);
+    }
 }

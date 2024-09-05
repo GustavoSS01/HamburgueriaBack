@@ -41,8 +41,30 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id){
-        Optional<CategoryModel> productModelOptional = categoryService.findById(id);
-        return productModelOptional.<ResponseEntity<Object>>map(productModel -> ResponseEntity.status(HttpStatus.OK).body(productModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
+    public ResponseEntity<Object> getOneCategory(@PathVariable(value = "id") UUID id){
+        Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);
+        return categoryModelOptional.<ResponseEntity<Object>>map(categoryModel -> ResponseEntity.status(HttpStatus.OK).body(categoryModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") UUID id){
+        Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);
+        if (!categoryModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada!");
+        }
+        categoryService.delete(categoryModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Categoria deletada com sucesso!");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateCategory(@PathVariable(value = "id") UUID id, @RequestBody @Valid CategoryDto categoryDto){
+        Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);
+        if(!categoryModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria não encontrada!");
+        }
+        var categoryModel = new CategoryModel();
+        BeanUtils.copyProperties(categoryDto, categoryModel);
+        categoryModel.setIdCategory(categoryModelOptional.get().getIdCategory());
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.save(categoryModel));
     }
 }
