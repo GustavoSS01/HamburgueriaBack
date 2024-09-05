@@ -1,6 +1,7 @@
 package com.example.HamburgueriaBack.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,7 @@ public class CategoryDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private long num_prod;
     public String getName() {
         return name;
