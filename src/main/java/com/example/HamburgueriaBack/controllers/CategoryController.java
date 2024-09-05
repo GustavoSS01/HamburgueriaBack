@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.HamburgueriaBack.services.CategoryService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,5 +38,11 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryModel>> getAllCategories(){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id){
+        Optional<CategoryModel> productModelOptional = categoryService.findById(id);
+        return productModelOptional.<ResponseEntity<Object>>map(productModel -> ResponseEntity.status(HttpStatus.OK).body(productModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
     }
 }

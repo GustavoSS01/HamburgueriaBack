@@ -2,11 +2,14 @@ package com.example.HamburgueriaBack.services;
 
 import com.example.HamburgueriaBack.models.CategoryModel;
 
+import com.example.HamburgueriaBack.models.ProductModel;
 import com.example.HamburgueriaBack.repositories.CategoryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -27,5 +30,9 @@ public class CategoryService {
 
     public List<CategoryModel> findAll() {
         return categoryRepository.findAll();
+    }
+
+    public Optional<CategoryModel> findById(UUID id) {
+        return categoryRepository.findById(id);
     }
 }
