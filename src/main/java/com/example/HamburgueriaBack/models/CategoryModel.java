@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +21,9 @@ public class CategoryModel implements Serializable {
     private String name;
     @Column(nullable = false)
     private long num_prod;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductModel> products;
 
     public UUID getIdCategory() {
         return idCategory;

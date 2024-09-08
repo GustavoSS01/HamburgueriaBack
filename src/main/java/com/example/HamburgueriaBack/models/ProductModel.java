@@ -22,8 +22,10 @@ public class ProductModel implements Serializable {
     private String description;
     @Column(nullable = false)
     private String image;
-    @Column(nullable = false, length = 20)
-    private String categoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "idCategory", nullable = false)
+    private CategoryModel category;
 
     public UUID getId() {
         return id;
