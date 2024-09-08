@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-//import java.security.SecureRandom;
-//import java.time.LocalDateTime;
-//import java.time.ZoneId;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
@@ -27,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveProduct (@RequestBody @Valid ProductDto productDto){
+    public ResponseEntity<Object> saveProduct(@RequestBody @Valid ProductDto productDto){
         if(productService.existsByName(productDto.getName())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um produto cadastrado com esse nome!");
         }

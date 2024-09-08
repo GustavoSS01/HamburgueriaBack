@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/product/**", "/category/**").permitAll()
+                .requestMatchers("/product/**", "/category/**", "/client/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
