@@ -32,4 +32,11 @@ public class CategoryModel implements Serializable {
     public void setIdCategory(UUID idCategory) {
         this.idCategory = idCategory;
     }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 }
