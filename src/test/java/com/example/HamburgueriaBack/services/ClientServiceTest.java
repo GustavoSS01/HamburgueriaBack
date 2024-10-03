@@ -75,7 +75,7 @@ class ClientServiceTest {
 
     @Test
     void testFindAllClients() {
-        List<ClientModel> clients = Arrays.asList(clientModel);
+        List<ClientModel> clients = Collections.singletonList(clientModel);
         when(clientRepository.findAll()).thenReturn(clients);
 
         List<ClientModel> foundClients = clientService.findAll();
