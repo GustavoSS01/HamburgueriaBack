@@ -32,4 +32,21 @@ public class ClientModel implements Serializable {
     public void setId(UUID id) {
         this.id = id;
     }
+
+    public void setName(String name) {
+        this.name = name;
+
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
