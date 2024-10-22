@@ -31,6 +31,7 @@ class ProductServiceTest {
         productModel.setDescription("A burger with cheese.");
     }
 
+    // Teste do caminho feliz
     @Test
     void testSaveProduct() {
         when(productRepository.save(productModel)).thenReturn(productModel);
@@ -41,6 +42,21 @@ class ProductServiceTest {
         assertEquals("Cheeseburger", savedProduct.getName());
         verify(productRepository, times(1)).save(productModel);
     }
+
+    // Teste do caminho triste
+    @Test
+    void testSaveProductFailure() {
+        when(productRepository.save(productModel)).thenThrow(new RuntimeException("Error saving product"));
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            productService.save(productModel);
+        });
+
+        assertEquals("Error saving product", exception.getMessage());
+        verify(productRepository, times(1)).save(productModel);
+    }
+
+    // Teste do caminho feliz
     @Test
     void testExistsByName() {
         when(productRepository.existsByName("Cheeseburger")).thenReturn(true);
@@ -51,6 +67,18 @@ class ProductServiceTest {
         verify(productRepository, times(1)).existsByName("Cheeseburger");
     }
 
+    // Teste do caminho triste
+    @Test
+    void testExistsByNameFailure() {
+        when(productRepository.existsByName("Cheeseburger")).thenReturn(false);
+
+        boolean exists = productService.existsByName("Cheeseburger");
+
+        assertFalse(exists);
+        verify(productRepository, times(1)).existsByName("Cheeseburger");
+    }
+
+    // Teste do caminho feliz
     @Test
     void testExistsByDescription() {
         when(productRepository.existsByDescription("A burger with cheese.")).thenReturn(true);
@@ -61,6 +89,18 @@ class ProductServiceTest {
         verify(productRepository, times(1)).existsByDescription("A burger with cheese.");
     }
 
+    // Teste do caminho triste
+    @Test
+    void testExistsByDescriptionFailure() {
+        when(productRepository.existsByDescription("A burger with cheese.")).thenReturn(false);
+
+        boolean exists = productService.existsByDescription("A burger with cheese.");
+
+        assertFalse(exists);
+        verify(productRepository, times(1)).existsByDescription("A burger with cheese.");
+    }
+
+    // Teste do caminho feliz
     @Test
     void testFindAllProducts() {
         List<ProductModel> products = Collections.singletonList(productModel);
@@ -73,6 +113,18 @@ class ProductServiceTest {
         verify(productRepository, times(1)).findAll();
     }
 
+    // Teste do caminho triste
+    @Test
+    void testFindAllProductsEmpty() {
+        when(productRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<ProductModel> foundProducts = productService.findAll();
+
+        assertTrue(foundProducts.isEmpty());
+        verify(productRepository, times(1)).findAll();
+    }
+
+    // Teste do caminho feliz
     @Test
     void testFindProductById() {
         UUID id = UUID.randomUUID();
@@ -85,12 +137,38 @@ class ProductServiceTest {
         verify(productRepository, times(1)).findById(id);
     }
 
+    // Teste do caminho triste
+    @Test
+    void testFindProductByIdNotFound() {
+        UUID id = UUID.randomUUID();
+        when(productRepository.findById(id)).thenReturn(Optional.empty());
+
+        Optional<ProductModel> foundProduct = productService.findById(id);
+
+        assertFalse(foundProduct.isPresent());
+        verify(productRepository, times(1)).findById(id);
+    }
+
+    // Teste do caminho feliz
     @Test
     void testDeleteProduct() {
         doNothing().when(productRepository).delete(productModel);
 
         productService.delete(productModel);
 
+        verify(productRepository, times(1)).delete(productModel);
+    }
+
+    // Teste do caminho triste
+    @Test
+    void testDeleteProductFailure() {
+        doThrow(new RuntimeException("Error deleting product")).when(productRepository).delete(productModel);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            productService.delete(productModel);
+        });
+
+        assertEquals("Error deleting product", exception.getMessage());
         verify(productRepository, times(1)).delete(productModel);
     }
 }
