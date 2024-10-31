@@ -3,6 +3,7 @@ package com.example.HamburgueriaBack.controllers;
 import com.example.HamburgueriaBack.dtos.ProductDto;
 import com.example.HamburgueriaBack.models.ProductModel;
 import com.example.HamburgueriaBack.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @Operation(summary = "Cadastrar novo produto", description = "Endpoint para cadastrar um novo produto")
     @PostMapping
     public ResponseEntity<Object> saveProduct(@RequestBody @Valid ProductDto productDto){
         if(productService.existsByName(productDto.getName())){
@@ -37,17 +39,20 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productModel));
     }
 
+    @Operation(summary = "Listar todos os produtos", description = "Endpoint para listar todos os produtos")
     @GetMapping
     public ResponseEntity<List<ProductModel>> getAllProducts(){
         return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
     }
 
+    @Operation(summary = "Buscar um produto pelo ID", description = "Endpoint para buscar um produto pelo seu ID")
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id){
         Optional<ProductModel> productModelOptional = productService.findById(id);
         return productModelOptional.<ResponseEntity<Object>>map(productModel -> ResponseEntity.status(HttpStatus.OK).body(productModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
     }
 
+    @Operation(summary = "Deletar um produto", description = "Endpoint para deletar um produto pelo seu ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id){
         Optional<ProductModel> productModelOptional = productService.findById(id);
@@ -58,6 +63,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso!");
     }
 
+    @Operation(summary = "Atualizar um produto", description = "Endpoint para atualizar um produto pelo seu ID")
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto){
         Optional<ProductModel> productModelOptional = productService.findById(id);

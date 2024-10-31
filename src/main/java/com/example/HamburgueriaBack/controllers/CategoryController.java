@@ -2,6 +2,7 @@ package com.example.HamburgueriaBack.controllers;
 
 import com.example.HamburgueriaBack.dtos.CategoryDto;
 import com.example.HamburgueriaBack.models.CategoryModel;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @Operation(summary = "Criar nova categoria", description = "Endpoint para criar uma nova categoria")
     @PostMapping
     public ResponseEntity<Object> saveCategory(@RequestBody @Valid CategoryDto categoryDto){
         if(categoryService.existsByName(categoryDto.getName())){
@@ -35,17 +37,20 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(categoryModel));
     }
 
+    @Operation(summary = "Listar todas as categorias", description = "Endpoint para listar todas as categorias")
     @GetMapping
     public ResponseEntity<List<CategoryModel>> getAllCategories(){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll());
     }
 
+    @Operation(summary = "Buscar uma categoria pelo ID", description = "Endpoint para buscar uma categoria pelo seu ID")
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneCategory(@PathVariable(value = "id") UUID id){
         Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);
         return categoryModelOptional.<ResponseEntity<Object>>map(categoryModel -> ResponseEntity.status(HttpStatus.OK).body(categoryModel)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado"));
     }
 
+    @Operation(summary = "Deletar uma categoria", description = "Endpoint para deletar uma categoria pelo seu ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") UUID id){
         Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);
@@ -56,6 +61,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body("Categoria deletada com sucesso!");
     }
 
+    @Operation(summary = "Atualizar uma categoria", description = "Endpoint para atualizar uma categoria pelo seu ID")
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateCategory(@PathVariable(value = "id") UUID id, @RequestBody @Valid CategoryDto categoryDto){
         Optional<CategoryModel> categoryModelOptional = categoryService.findById(id);

@@ -21,8 +21,20 @@ public class SecurityConfig {
                 .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/product/**", "/category/**", "/client/**").permitAll()
-                .anyRequest().authenticated();
+                .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/webjars/**"
+                ).permitAll() // Permitir acesso à documentação do Swagger
+
+                .requestMatchers(
+                        "/product/**",
+                        "/category/**",
+                        "/client/**"
+                ).permitAll() // Permitir acesso aos endpoints da API sem autenticação
+
+                .anyRequest().authenticated(); // Qualquer outra requisição requer autenticação
 
         return http.build();
     }
