@@ -25,7 +25,7 @@ public class ProductModel implements Serializable {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "idCategory", nullable = false)
+    @JoinColumn(name = "id_category", nullable = false)
     private CategoryModel category;
 
     public UUID getId() {

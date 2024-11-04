@@ -26,15 +26,15 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/swagger-resources/**",
                         "/webjars/**"
-                ).permitAll() // Permitir acesso à documentação do Swagger
+                ).permitAll()
 
                 .requestMatchers(
                         "/product/**",
                         "/category/**",
                         "/client/**"
-                ).permitAll() // Permitir acesso aos endpoints da API sem autenticação
+                ).permitAll()
 
-                .anyRequest().authenticated(); // Qualquer outra requisição requer autenticação
+                .anyRequest().authenticated();
 
         return http.build();
     }
@@ -43,7 +43,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 

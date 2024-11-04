@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class CategoryModel implements Serializable {
     private long num_prod;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductModel> products;
+    private List<ProductModel> products = new ArrayList<>();
 
     public UUID getIdCategory() {
         return idCategory;
