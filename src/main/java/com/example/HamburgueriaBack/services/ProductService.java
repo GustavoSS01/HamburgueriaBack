@@ -1,8 +1,11 @@
 package com.example.HamburgueriaBack.services;
 
+import com.example.HamburgueriaBack.dtos.ProductDto;
 import com.example.HamburgueriaBack.models.ProductModel;
+import com.example.HamburgueriaBack.repositories.CategoryRepository;
 import com.example.HamburgueriaBack.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
+import jdk.jfr.Category;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +15,11 @@ import java.util.UUID;
 public class ProductService {
 
     final ProductRepository productRepository;
+    final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository){
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Transactional
@@ -28,6 +33,10 @@ public class ProductService {
 
     public boolean existsByDescription(String description) {
         return productRepository.existsByDescription(description);
+    }
+
+    public void setProductCategory(ProductModel product, ProductDto productDto){
+        product.setCategory(categoryRepository.findByName(productDto.getCategory()));
     }
 
     public List<ProductModel> findAll() {

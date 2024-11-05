@@ -1,5 +1,6 @@
 package com.example.HamburgueriaBack.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class CategoryModel implements Serializable {
     private long num_prod;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<ProductModel> products = new ArrayList<>();
 
     public UUID getIdCategory() {

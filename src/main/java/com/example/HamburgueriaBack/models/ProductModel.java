@@ -1,5 +1,6 @@
 package com.example.HamburgueriaBack.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.io.Serial;
@@ -26,6 +27,7 @@ public class ProductModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)
+    @JsonBackReference
     private CategoryModel category;
 
     public UUID getId() {

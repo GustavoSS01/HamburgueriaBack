@@ -36,6 +36,9 @@ public class ProductController {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productDto, productModel);
         //productModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
+
+        productService.setProductCategory(productModel, productDto);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productModel));
     }
 
