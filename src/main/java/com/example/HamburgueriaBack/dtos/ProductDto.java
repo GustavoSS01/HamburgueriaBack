@@ -1,11 +1,7 @@
 package com.example.HamburgueriaBack.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
 public class ProductDto {
 
     @NotBlank
@@ -14,7 +10,6 @@ public class ProductDto {
     @NotBlank
     private String description;
 
-    @NotBlank
     private String image;
 
     @NotBlank
@@ -36,16 +31,11 @@ public class ProductDto {
         this.description = description;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

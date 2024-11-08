@@ -22,7 +22,7 @@ public class ProductModel implements Serializable {
     private String name;
     @Column(nullable = false, length = 30)
     private String description;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String image;
 
     @ManyToOne
@@ -48,5 +48,9 @@ public class ProductModel implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public void setCategory(CategoryModel byName) {
+        this.category = byName;
     }
 }
