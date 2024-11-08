@@ -8,8 +8,8 @@ public class ClientDto {
     @NotBlank
     private String name;
 
-    @NotNull
-    private int phone;
+    @NotBlank
+    private String phone;
 
     @NotBlank
     private String email;
@@ -22,11 +22,11 @@ public class ClientDto {
         this.name = name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(@NotBlank int phone) {
+    public void setPhone(@NotBlank String phone) {
         this.phone = phone;
     }
 

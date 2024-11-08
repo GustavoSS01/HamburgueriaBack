@@ -24,7 +24,7 @@ public class ClientService {
 
     public boolean existsByName(String name) { return clientRepository.existsByName(name); }
 
-    public boolean existsByPhone(int phone) { return clientRepository.existsByPhone(phone); }
+    public boolean existsByPhone(String phone) { return clientRepository.existsByPhone(phone); }
 
     public boolean existsByEmail(String email) { return clientRepository.existsByEmail(email); }
 

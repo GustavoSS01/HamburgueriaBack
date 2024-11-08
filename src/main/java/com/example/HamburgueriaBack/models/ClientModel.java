@@ -21,7 +21,7 @@ public class ClientModel implements Serializable {
     @Column(nullable = false, length = 30)
     private String name;
     @Column(nullable = false, unique = true, length = 20)
-    private int phone;
+    private String phone;
     @Column(nullable = false, unique = true, length = 40)
     private String email;
 
@@ -35,10 +35,9 @@ public class ClientModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
