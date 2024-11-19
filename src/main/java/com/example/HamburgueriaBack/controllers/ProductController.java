@@ -68,14 +68,33 @@ public class ProductController {
 
     @Operation(summary = "Atualizar um produto", description = "Endpoint para atualizar um produto pelo seu ID")
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto){
+    public ResponseEntity<Object> updateProduct(
+            @PathVariable(value = "id") UUID id,
+            @RequestBody @Valid ProductDto productDto) {
+
         Optional<ProductModel> productModelOptional = productService.findById(id);
-        if(!productModelOptional.isPresent()){
+        if (!productModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
         }
-        var productModel = new ProductModel();
-        BeanUtils.copyProperties(productDto, productModel);
-        productModel.setId(productModelOptional.get().getId());
+
+        var productModel = productModelOptional.get();
+
+        // Atualiza apenas os campos enviados no DTO
+        if (productDto.getName() != null && !productDto.getName().isEmpty()) {
+            productModel.setName(productDto.getName());
+        }
+        if (productDto.getDescription() != null && !productDto.getDescription().isEmpty()) {
+            productModel.setDescription(productDto.getDescription());
+        }
+        if (productDto.getImage() != null && !productDto.getImage().isEmpty()) {
+            productModel.setImage(productDto.getImage());
+        }
+
+        // Atualização do relacionamento de categoria, se necessário
+        if (productDto.getCategory() != null) {
+            productService.setProductCategory(productModel, productDto);
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(productService.save(productModel));
     }
 
