@@ -53,4 +53,12 @@ public class ProductModel implements Serializable {
     public void setCategory(CategoryModel byName) {
         this.category = byName;
     }
+
+    public String getImage(){
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

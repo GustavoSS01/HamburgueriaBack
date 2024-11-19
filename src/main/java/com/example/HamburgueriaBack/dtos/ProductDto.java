@@ -2,6 +2,8 @@ package com.example.HamburgueriaBack.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Optional;
+
 public class ProductDto {
 
     @NotBlank
@@ -38,4 +40,9 @@ public class ProductDto {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getImage() {
+        return image;
+    }
+
 }
