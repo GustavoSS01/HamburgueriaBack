@@ -24,6 +24,8 @@ public class ProductModel implements Serializable {
     private String description;
     @Column(nullable = true)
     private String image;
+    @Column(nullable = true)
+    private Float price;
 
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)

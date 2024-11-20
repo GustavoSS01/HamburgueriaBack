@@ -17,6 +17,8 @@ public class ProductDto {
     @NotBlank
     private String category;
 
+    private Float price;
+
     public String getName() {
         return name;
     }
@@ -45,4 +47,15 @@ public class ProductDto {
         return image;
     }
 
+    public Float getPrice() {
+        if(price == null) {
+            return 0.00f;
+        } else {
+            return price;
+        }
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
 }
