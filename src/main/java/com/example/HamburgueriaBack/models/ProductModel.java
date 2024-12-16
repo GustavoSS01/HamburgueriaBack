@@ -47,6 +47,7 @@ public class ProductModel implements Serializable {
     public void setDescription(String desc) {
         this.description = desc;
     }
+    
 
     public String getName() {
         return name;
